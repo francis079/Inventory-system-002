@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Sales History</h1>
+    <table id="sales-table">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity Sold</th>
+                <th>Price per Unit</th>
+                <th>Total</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{ sale.item_name }}</td>
+                <td>{{ sale.quantity }}</td>
+                <td>${{ "%.2f"|format(sale.price) }}</td>
+                <td>${{ "%.2f"|format(sale.total) }}</td>
+                <td>{{ sale.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/">Back to Inventory</a>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

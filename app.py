@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 import json
 import os
+from datetime import datetime
 
 app = Flask(__name__, template_folder='Inventory-system-002/templates', static_folder='Inventory-system-002/static')
 
 inventory = []
+sales = []
 
 def load_inventory():
     global inventory
@@ -12,16 +14,30 @@ def load_inventory():
         with open('Inventory-system-002/inventory.json', 'r') as f:
             inventory = json.load(f)
 
-
 def save_inventory():
     with open('Inventory-system-002/inventory.json', 'w') as f:
         json.dump(inventory, f, indent=4)
 
+def load_sales():
+    global sales
+    if os.path.exists('Inventory-system-002/sales.json'):
+        with open('Inventory-system-002/sales.json', 'r') as f:
+            sales = json.load(f)
+
+def save_sales():
+    with open('Inventory-system-002/sales.json', 'w') as f:
+        json.dump(sales, f, indent=4)
+
 load_inventory()
+load_sales()
 
 @app.route('/')
 def index():
     return render_template('index.html', inventory=inventory)
+
+@app.route('/sales')
+def sales_page():
+    return render_template('sales.html', sales=sales)
 
 @app.route('/add', methods=['POST'])
 def add():
@@ -59,7 +75,18 @@ def sell(item_id):
         quantity_to_sell = int(request.form.get('quantity', 1))
         if item['quantity'] >= quantity_to_sell:
             item['quantity'] -= quantity_to_sell
+            sale_id = max([s['id'] for s in sales] + [0]) + 1
+            sales.append({
+                'id': sale_id,
+                'item_id': item['id'],
+                'item_name': item['name'],
+                'quantity': quantity_to_sell,
+                'price': item['price'],
+                'total': round(quantity_to_sell * item['price'], 2),
+                'date': datetime.now().isoformat()
+            })
             save_inventory()
+            save_sales()
         return redirect(url_for('index'))
     return render_template('sell.html', item=item)
 

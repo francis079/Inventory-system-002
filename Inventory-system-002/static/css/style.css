@@ -82,3 +82,18 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.sell-btn {
+    padding: 6px 12px;
+    background: #ffc107;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.sell-btn:hover {
+    background: #ffb300;
+}

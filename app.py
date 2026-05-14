@@ -50,6 +50,17 @@ def edit(item_id):
         return redirect(url_for('index'))
     return render_template('edit.html', item=item)
 
+@app.route('/sell/<int:item_id>', methods=['POST'])
+def sell(item_id):
+    item = next((i for i in inventory if i['id'] == item_id), None)
+    if not item:
+        return 'Item not found', 404
+    quantity_to_sell = int(request.form.get('quantity', 1))
+    if item['quantity'] >= quantity_to_sell:
+        item['quantity'] -= quantity_to_sell
+        save_inventory()
+    return redirect(url_for('index'))
+
 @app.route('/delete/<int:item_id>')
 def delete(item_id):
     global inventory

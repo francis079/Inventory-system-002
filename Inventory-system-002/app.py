@@ -12,6 +12,7 @@ def load_inventory():
         with open('inventory.json', 'r') as f:
             inventory = json.load(f)
 
+
 def save_inventory():
     with open('inventory.json', 'w') as f:
         json.dump(inventory, f, indent=4)

@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "name": "BOOKS",
+        "category": "A4",
+        "quantity": 12,
+        "price": 70.0,
+        "description": ""
+    }
+]

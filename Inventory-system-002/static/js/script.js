@@ -1,9 +1,9 @@
 // JavaScript for supermarket inventory system
-document.querySelector('form').addEventListener('submit', function(e) {
-    const name = document.querySelector('input[name="name"]').value;
-    const category = document.querySelector('input[name="category"]').value;
-    const quantity = document.querySelector('input[name="quantity"]').value;
-    const price = document.querySelector('input[name="price"]').value;
+document.querySelector('#add-form').addEventListener('submit', function(e) {
+    const name = document.querySelector('#add-form input[name="name"]').value;
+    const category = document.querySelector('#add-form input[name="category"]').value;
+    const quantity = document.querySelector('#add-form input[name="quantity"]').value;
+    const price = document.querySelector('#add-form input[name="price"]').value;
     if (!name || !category || quantity <= 0 || price <= 0) {
         alert('Please enter valid item details.');
         e.preventDefault();
